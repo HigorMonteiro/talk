@@ -1596,6 +1596,3 @@ layout: cover
 ---
 
 # **"Você pode criar coisas que o mundo inteiro usa."**
-
-
-# **"Você pode criar coisas que o mundo inteiro usa."**
