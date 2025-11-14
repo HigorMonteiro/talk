@@ -245,6 +245,112 @@ blockquote {
     color: var(--color-indigo-600);
 }
 
+/* Estilos para perguntas e respostas */
+.question-slide {
+    text-align: center;
+}
+
+.question-title {
+    font-size: clamp(var(--text-3xl), 5vw, var(--text-5xl));
+    color: var(--color-black);
+    font-weight: var(--font-weight-bold);
+    margin-bottom: 3rem;
+    text-align: center;
+}
+
+.answer-item {
+    margin: 1.5rem 0;
+    font-size: clamp(var(--text-lg), 2.5vw, var(--text-2xl));
+    color: var(--color-text);
+    line-height: 1.8;
+    padding: 1rem 2rem;
+    background: var(--color-white);
+    border-left: 4px solid var(--color-accent);
+    border-radius: 8px;
+    text-align: left;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Para fragmentos do Slidev - respostas aparecem progressivamente */
+.question-slide [v-click] {
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.question-slide [v-click].slidev-fragment {
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.question-slide [v-click].slidev-fragment.current {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Momento de pensamento para alunos responderem */
+.thinking-moment {
+    margin: 3rem auto;
+    padding: 2rem;
+    text-align: center;
+    background: linear-gradient(135deg, var(--color-cyan-50) 0%, var(--color-blue-50) 100%);
+    border-radius: 16px;
+    border: 2px dashed var(--color-accent);
+    max-width: 600px;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+.thinking-icon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    animation: bounce 1s ease-in-out infinite;
+}
+
+.thinking-text {
+    font-size: clamp(var(--text-xl), 3vw, var(--text-3xl));
+    color: var(--color-zinc-800);
+    font-weight: var(--font-weight-semibold);
+    margin: 0;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(0, 184, 169, 0.4);
+    }
+    50% {
+        transform: scale(1.02);
+        box-shadow: 0 0 0 10px rgba(0, 184, 169, 0);
+    }
+}
+
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+.interactive-question .thinking-moment {
+    opacity: 0;
+    transform: scale(0.8);
+}
+
+.interactive-question .thinking-moment.slidev-fragment.current {
+    opacity: 1;
+    transform: scale(1);
+    animation: pulse 2s ease-in-out infinite, fadeInUp 0.6s ease-out forwards;
+}
+
 .examples-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -834,50 +940,19 @@ blockquote {
     border-color: var(--color-accent);
 }
 
-.task-image {
-    width: 100%;
-    height: 160px;
-    overflow: hidden;
-    background: var(--color-zinc-100);
-    position: relative;
-}
-
-.task-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.3s ease;
-}
-
-.task-card:hover .task-image img {
-    transform: scale(1.03);
-}
-
 .task-card h3 {
-    padding: 1rem 1.5rem;
+    padding: 2rem 1.5rem;
     margin: 0;
-    font-size: var(--text-base);
+    font-size: var(--text-lg);
     font-weight: var(--font-weight-semibold);
     color: var(--color-zinc-900);
     text-align: center;
-    border-top: 2px solid var(--color-zinc-100);
-    line-height: 1.4;
-}
-
-.task-card:nth-child(1) {
-    border-top-color: var(--color-pink-500);
-}
-
-.task-card:nth-child(2) {
-    border-top-color: var(--color-sky-500);
-}
-
-.task-card:nth-child(3) {
-    border-top-color: var(--color-blue-500);
-}
-
-.task-card:nth-child(4) {
-    border-top-color: var(--color-purple-400);
+    border-top: 4px solid var(--color-zinc-100);
+    line-height: 1.5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 120px;
 }
 
 .task-card:nth-child(1) h3 {
@@ -903,17 +978,329 @@ blockquote {
         padding: 0;
     }
     
-    .task-image {
-        height: 150px;
-    }
     
     .task-card h3 {
         padding: 0.875rem 1rem;
         font-size: var(--text-sm);
     }
 }
+
+.about-me {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    min-height: 60vh;
+    padding: 2rem 3rem;
+}
+
+.about-content {
+    display: flex;
+    gap: 3rem;
+    align-items: flex-start;
+    max-width: 900px;
+    animation: fadeInUp 0.8s ease-out;
+    text-align: left;
+}
+
+.about-avatar {
+    width: 180px;
+    height: 180px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 4px solid var(--color-accent);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    background: var(--color-zinc-100);
+    animation: avatarAppear 0.8s ease-out 0.2s both;
+}
+
+.about-info {
+    flex: 1;
+    text-align: left;
+}
+
+.about-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+@keyframes avatarAppear {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.about-info h2 {
+    font-size: clamp(var(--text-4xl), 5vw, var(--text-6xl));
+    font-weight: var(--font-weight-bold);
+    color: var(--color-black);
+    margin: 0 0 0.75rem 0;
+    letter-spacing: -0.02em;
+    text-align: left;
+}
+
+.about-info .about-role {
+    font-size: clamp(var(--text-xl), 2.5vw, var(--text-3xl));
+    color: var(--color-accent);
+    font-weight: var(--font-weight-semibold);
+    margin: 0 0 1.5rem 0;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    text-align: left;
+}
+
+.about-info .about-divider {
+    width: 80px;
+    height: 3px;
+    background: var(--color-accent);
+    margin: 0 0 1.5rem 0;
+    border-radius: 2px;
+}
+
+.about-info .about-description {
+    font-size: clamp(var(--text-lg), 2vw, var(--text-xl));
+    color: var(--color-zinc-700);
+    line-height: 1.8;
+    margin: 0;
+    font-weight: var(--font-weight-medium);
+    text-align: left;
+}
+
+@media (max-width: 768px) {
+    .about-content {
+        flex-direction: column;
+        gap: 2rem;
+        align-items: center;
+    }
+    
+    .about-info {
+        text-align: center;
+    }
+    
+    .about-info h2,
+    .about-info .about-role,
+    .about-info .about-description {
+        text-align: center;
+    }
+    
+    .about-info .about-divider {
+        margin: 0 auto 1.5rem;
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.slidev-layout:has(.roadmap-container) {
+    padding: 2rem 2rem !important;
+    overflow: visible !important;
+}
+
+.slidev-layout:has(.roadmap-container) h1 {
+    margin-bottom: 1rem;
+    font-size: clamp(var(--text-2xl), 3vw, var(--text-3xl));
+}
+
+.roadmap-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1.5rem;
+    flex-wrap: wrap;
+    padding: 1rem;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+    overflow: visible;
+}
+
+.roadmap-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    min-width: 160px;
+    max-width: 180px;
+    opacity: 0;
+    animation: stepAppear 0.6s ease-out forwards;
+    overflow: visible;
+}
+
+.roadmap-step:nth-child(1) {
+    animation-delay: 0.1s;
+}
+
+.roadmap-step:nth-child(3) {
+    animation-delay: 0.3s;
+}
+
+.roadmap-step:nth-child(5) {
+    animation-delay: 0.5s;
+}
+
+.roadmap-step:nth-child(7) {
+    animation-delay: 0.7s;
+}
+
+.step-number {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: var(--color-accent);
+    color: var(--color-white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--text-xl);
+    font-weight: var(--font-weight-bold);
+    box-shadow: 0 4px 12px rgba(0, 184, 169, 0.3);
+    flex-shrink: 0;
+}
+
+.step-content {
+    text-align: center;
+    background: var(--color-white);
+    border: 2px solid var(--color-zinc-200);
+    border-radius: var(--radius-lg);
+    padding: 1rem 0.875rem;
+    min-height: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    transition: all 0.3s ease;
+    width: 100%;
+    overflow: visible;
+}
+
+.roadmap-step:hover .step-content {
+    border-color: var(--color-accent);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.step-content h3 {
+    font-size: var(--text-base);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-zinc-900);
+    margin: 0 0 0.375rem 0;
+}
+
+.step-content p {
+    font-size: var(--text-sm);
+    color: var(--color-zinc-600);
+    margin: 0;
+    line-height: 1.5;
+}
+
+.roadmap-arrow {
+    font-size: 2rem;
+    color: var(--color-accent);
+    font-weight: var(--font-weight-bold);
+    opacity: 0;
+    animation: arrowAppear 0.4s ease-out forwards;
+    flex-shrink: 0;
+    padding: 0 0.25rem;
+}
+
+.roadmap-arrow:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.roadmap-arrow:nth-child(4) {
+    animation-delay: 0.4s;
+}
+
+.roadmap-arrow:nth-child(6) {
+    animation-delay: 0.6s;
+}
+
+@keyframes stepAppear {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes arrowAppear {
+    from {
+        opacity: 0;
+        transform: scale(0);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@media (max-width: 768px) {
+    .roadmap-container {
+        flex-direction: column;
+        gap: 0.75rem;
+        padding: 0.5rem;
+    }
+    
+    .roadmap-arrow {
+        transform: rotate(90deg);
+        font-size: 1.5rem;
+    }
+    
+    .roadmap-step {
+        min-width: 100%;
+        max-width: 280px;
+    }
+    
+    .step-content {
+        min-height: 90px;
+        padding: 0.875rem 0.75rem;
+    }
+    
+    .step-number {
+        width: 45px;
+        height: 45px;
+        font-size: var(--text-lg);
+    }
+}
 </style>
 
+---
+layout: cover
+---
+
+<div class="about-me">
+  <div class="about-content">
+    <div class="about-avatar">
+      <img src="./profile2.png" alt="Higor Monteiro" />
+    </div>
+    <div class="about-info">
+      <h2>Higor Monteiro</h2>
+      <p class="about-role">Fullstack Developer</p>
+      <div class="about-divider"></div>
+      <p class="about-description">
+        Desenvolvedor & Palestrante.
+      </p>
+    </div>
+  </div>
+</div>
 
 ---
 layout: cover
@@ -925,11 +1312,23 @@ layout: cover
 
 ---
 
+<div class="question-slide">
+
 # **O que é Frontend?**
 
-* Parte visual das aplicações
-* Interface + interação
-* Mistura de design e tecnologia
+<div v-click class="answer-item">
+Parte visual das aplicações — o que o usuário vê e usa
+</div>
+
+<div v-click class="answer-item">
+Interface + interação: botões, menus, formulários, animações
+</div>
+
+<div v-click class="answer-item">
+É a junção de design, lógica e experiência do usuário
+</div>
+
+</div>
 
 ---
 
@@ -982,47 +1381,47 @@ layout: cover
 
 ---
 
-# **O que um frontend faz**
+<div class="question-slide">
 
-<div class="frontend-tasks">
-  <div class="task-card">
-    <div class="task-image">
-      <img src="https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=400&h=300&fit=crop" alt="Constrói telas" />
-    </div>
-    <h3>Constrói telas</h3>
-  </div>
-  
-  <div class="task-card">
-    <div class="task-image">
-      <img src="https://images.unsplash.com/photo-1551650975-87deedd944c3?w=400&h=300&fit=crop" alt="Implementa interações" />
-    </div>
-    <h3>Implementa interações</h3>
-  </div>
-  
-  <div class="task-card">
-    <div class="task-image">
-      <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=400&h=300&fit=crop" alt="Consome APIs" />
-    </div>
-    <h3>Consome APIs</h3>
-  </div>
-  
-  <div class="task-card">
-    <div class="task-image">
-      <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=400&h=300&fit=crop" alt="Trabalha em equipe" />
-    </div>
-    <h3>Trabalha com designers e backend</h3>
-  </div>
+# **O que um frontend faz?**
+
+<div v-click class="answer-item">
+Constrói telas
+</div>
+
+<div v-click class="answer-item">
+Implementa interações
+</div>
+
+<div v-click class="answer-item">
+Consome APIs
+</div>
+
+<div v-click class="answer-item">
+Trabalha com designers e backend
+</div>
+
 </div>
 
 ---
 
-# **A base da Web**
+<div class="question-slide interactive-question">
 
-### **HTML — estrutura**
+# **Qual é a base da Web?**
 
-### **CSS — estilo**
+<div v-click="1" class="answer-item">
+HTML — estrutura semântica
+</div>
 
-### **JavaScript — comportamento**
+<div v-click="2" class="answer-item">
+CSS — estilo e responsividade
+</div>
+
+<div v-click="3" class="answer-item">
+JavaScript — comportamento e lógica
+</div>
+
+</div>
 
 ---
 
@@ -1031,37 +1430,135 @@ layout: cover
 </div>
 ---
 
-# **Ferramentas utilizadas**
+<div class="question-slide">
 
-* VS Code
-* Git & GitHub
-* Figma
-* DevTools do navegador
+# **Quais ferramentas são utilizadas?**
+
+<div v-click class="answer-item">
+VS Code
+</div>
+
+<div v-click class="answer-item">
+Git & GitHub
+</div>
+
+<div v-click class="answer-item">
+Figma
+</div>
+
+<div v-click class="answer-item">
+DevTools do navegador
+</div>
+
+</div>
 
 ---
 
-# **UX no Frontend**
+<div class="question-slide">
 
-* Facilidade de uso
-* Organização da informação
-* Acessibilidade (A11y)
+# **O que é importante em UX no Frontend?**
+
+<div v-click class="answer-item">
+Facilidade de uso
+</div>
+
+<div v-click class="answer-item">
+Organização da informação
+</div>
+
+<div v-click class="answer-item">
+Acessibilidade (A11y)
+</div>
+
+</div>
 
 ---
 
-# **Mercado de trabalho**
+<div class="question-slide">
 
-* Alta demanda
-* React domina o mercado
-* Boas práticas contam mais que diplomas
+# **Como está o mercado de trabalho?**
+
+<div v-click class="answer-item">
+Alta demanda por desenvolvedores frontend
+</div>
+
+<div v-click class="answer-item">
+React domina o mercado
+</div>
+
+<div v-click class="answer-item">
+Boas práticas contam mais que diplomas
+</div>
+
+</div>
 
 ---
 
-# **Como começar**
+<div class="question-slide">
 
+# **Como começar no Frontend?**
+
+<div v-click class="answer-item">
 1. Aprender bases (HTML, CSS, JS)
+</div>
+
+<div v-click class="answer-item">
 2. Criar pequenos projetos
+</div>
+
+<div v-click class="answer-item">
 3. Publicar no GitHub
+</div>
+
+<div v-click class="answer-item">
 4. Criar portfólio
+</div>
+
+</div>
+
+---
+
+# **Roadmap Frontend**
+
+<div class="roadmap-container">
+  <div class="roadmap-step">
+    <div class="step-number">1</div>
+    <div class="step-content">
+      <h3>Fundamentos</h3>
+      <p>HTML, CSS, JavaScript</p>
+    </div>
+  </div>
+  
+  <div class="roadmap-arrow">→</div>
+  
+  <div class="roadmap-step">
+    <div class="step-number">2</div>
+    <div class="step-content">
+      <h3>Frameworks</h3>
+      <p>React, Vue ou Svelte</p>
+    </div>
+  </div>
+  
+  <div class="roadmap-arrow">→</div>
+  
+  <div class="roadmap-step">
+    <div class="step-number">3</div>
+    <div class="step-content">
+      <h3>Ferramentas</h3>
+      <p>Git, npm, build tools</p>
+    </div>
+  </div>
+  
+  <div class="roadmap-arrow">→</div>
+  
+  <div class="roadmap-step">
+    <div class="step-number">4</div>
+    <div class="step-content">
+      <h3>Prática</h3>
+      <p>Projetos reais</p>
+    </div>
+  </div>
+</div>
 
 ---
 layout: default
@@ -1097,5 +1594,8 @@ Criar um botão que muda de cor ao clicar.
 ---
 layout: cover
 ---
+
+# **"Você pode criar coisas que o mundo inteiro usa."**
+
 
 # **"Você pode criar coisas que o mundo inteiro usa."**

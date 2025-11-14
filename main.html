@@ -31,6 +31,10 @@
     .slide.cover{ text-align:center; }
     .slide.cover h1{ font-size: clamp(36px,6vw,84px); line-height:0.95; letter-spacing:-0.02em; margin:0; text-transform:uppercase; }
     .slide.cover p{ margin-top:18px; font-size:20px; color:var(--muted); }
+    /* closing slide - fonte maior e centralizada */
+    .slide.cover.closing-slide{ text-align:center; display:flex; align-items:center; justify-content:center; }
+    .slide.cover.closing-slide h1{ font-size: clamp(48px,8vw,120px) !important; line-height:1.1; letter-spacing:-0.02em; margin:0 0 32px 0; text-transform:uppercase; text-align:center; }
+    .slide.cover.closing-slide p{ margin-top:0; font-size: clamp(28px,3vw,40px) !important; color:var(--muted); text-align:center; }
     /* content */
     .slide.content{ justify-content:flex-start; align-items:center; }
     .content-inner{ max-width:900px; width:100%; }
@@ -38,6 +42,14 @@
     .content-inner ul{ margin:0; padding:0; list-style:none; }
     .content-inner li{ font-size: clamp(18px,2.2vw,22px); margin:14px 0; display:flex; align-items:flex-start; gap:14px; }
     .dot{ width:14px; height:14px; border-radius:7px; background:var(--accent); margin-top:8px; flex-shrink:0; }
+    /* A base da Web - sem cores especiais */
+    .base-web .content-inner li {
+      color: var(--text);
+    }
+    .base-web .dot {
+      background: var(--text);
+      opacity: 0.3;
+    }
     /* code */
     .slide.code pre{ background:#f5f7fa; padding:18px; border-radius:12px; overflow:auto; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, 'Roboto Mono', monospace; }
     /* footer */
@@ -355,7 +367,7 @@
         </section>
 
         <!-- Slide 12 - Closing -->
-        <section class="slide cover" data-type="cover">
+        <section class="slide cover closing-slide" data-type="cover">
           <div class="slide-inner-container">
             <div class="slide-inner-slides">
               <div class="slide-inner">
