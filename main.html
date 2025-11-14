@@ -1,0 +1,563 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Apresentação — Desenvolvimento Frontend</title>
+  <style>
+    :root{
+      --accent:#00B8A9; --bg:#ffffff; --text:#0f172a; --muted:#334155;
+      --font: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+    html,body{height:100%; margin:0; background:var(--bg); color:var(--text); font-family:var(--font);}
+    .presentation-root{height:100vh; overflow:hidden; position:relative;}
+    .controls{position:fixed; top:20px; right:20px; display:flex; gap:10px; z-index:50;}
+    .ctrl{padding:10px 12px; border-radius:8px; border:1px solid rgba(15,23,42,0.06); background:transparent; cursor:pointer;}
+    .ctrl.primary{background:var(--accent); color:white; border:none;}
+    .slides-viewport{height:100%; width:100%; overflow:hidden;}
+    .slides{height:100%; display:flex; transition:transform .45s ease;}
+    .slide{width:100%; flex-shrink:0; display:flex; align-items:center; justify-content:center; padding:0; box-sizing:border-box; position:relative;}
+    /* slider interno */
+    .slide-inner-container{width:100%; height:100%; position:relative; overflow:hidden;}
+    .slide-inner-slides{display:flex; height:100%; transition:transform .45s ease; width:100%;}
+    .slide-inner{width:100%; flex-shrink:0; display:flex; align-items:center; justify-content:center; padding:64px; box-sizing:border-box;}
+    .slide.cover .slide-inner{padding:64px;}
+    .slide.content .slide-inner{justify-content:flex-start; align-items:center;}
+    .slide.code .slide-inner{justify-content:flex-start; align-items:center;}
+    .slide-indicators{position:absolute; bottom:24px; left:50%; transform:translateX(-50%); display:flex; gap:8px; z-index:40;}
+    .slide-indicator{width:8px; height:8px; border-radius:50%; background:rgba(15,23,42,0.2); cursor:pointer; transition:all .3s ease;}
+    .slide-indicator.active{background:var(--accent); width:24px; border-radius:4px;}
+    /* cover */
+    .slide.cover{ text-align:center; }
+    .slide.cover h1{ font-size: clamp(36px,6vw,84px); line-height:0.95; letter-spacing:-0.02em; margin:0; text-transform:uppercase; }
+    .slide.cover p{ margin-top:18px; font-size:20px; color:var(--muted); }
+    /* content */
+    .slide.content{ justify-content:flex-start; align-items:center; }
+    .content-inner{ max-width:900px; width:100%; }
+    .content-inner h2{ font-size: clamp(28px,4.5vw,48px); margin:0 0 18px 0; }
+    .content-inner ul{ margin:0; padding:0; list-style:none; }
+    .content-inner li{ font-size: clamp(18px,2.2vw,22px); margin:14px 0; display:flex; align-items:flex-start; gap:14px; }
+    .dot{ width:14px; height:14px; border-radius:7px; background:var(--accent); margin-top:8px; flex-shrink:0; }
+    /* code */
+    .slide.code pre{ background:#f5f7fa; padding:18px; border-radius:12px; overflow:auto; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, 'Roboto Mono', monospace; }
+    /* footer */
+    .footer{ position:fixed; bottom:18px; right:24px; font-size:14px; color:var(--muted); z-index:50; }
+    /* responsive */
+    @media(max-width:900px){
+      .slide-inner{ padding:28px; }
+      .content-inner h2{ font-size:28px; }
+      .content-inner li{ font-size:18px; }
+    }
+    /* focus */
+    .ctrl:focus{ outline:3px solid rgba(0,184,169,0.15); }
+  </style>
+</head>
+<body>
+  <div class="presentation-root" role="application" aria-label="Apresentação Frontend">
+    <div class="controls" aria-hidden="true">
+      <button id="prev" class="ctrl" title="Anterior">←</button>
+      <button id="next" class="ctrl primary" title="Próximo">→</button>
+    </div>
+
+    <div class="slides-viewport">
+      <div id="slides" class="slides">
+        <!-- Slide 1 - Cover -->
+        <section class="slide cover" data-type="cover">
+          <div class="slide-inner-container">
+            <div class="slide-inner-slides">
+              <div class="slide-inner">
+                <div>
+                  <h1>DESENVOLVIMENTO FRONTEND</h1>
+                  <p> Criando tudo o que o usuário vê e toca </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Slide 2 - Paleta e Estilo Visual -->
+        <section class="slide content" data-type="content">
+          <div class="slide-inner-container">
+            <div class="slide-inner-slides">
+              <div class="slide-inner">
+                <div class="content-inner">
+                  <h2>Paleta e Estilo Visual</h2>
+                  <ul>
+                    <li><span class="dot"></span> Cores principais: Branco (#FFFFFF), Preto (#000000) e 1 cor de destaque (ex: #00B8A9 ou #FFC300).</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="slide-inner">
+                <div class="content-inner">
+                  <h2>Paleta e Estilo Visual</h2>
+                  <ul>
+                    <li><span class="dot"></span> Tipografia: fonte sem-serifa limpa (Inter, Roboto, Helvetica Neue) com títulos marcantes.</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="slide-inner">
+                <div class="content-inner">
+                  <h2>Paleta e Estilo Visual</h2>
+                  <ul>
+                    <li><span class="dot"></span> Espaço respirado: margens amplas e pouco texto por slide. Menos é mais.</li>
+                    <li><span class="dot"></span> Apenas 1 imagem ou ilustração por slide (opcional).</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="slide-indicators"></div>
+          </div>
+        </section>
+
+        <!-- Slide 3 - O que é Frontend? -->
+        <section class="slide content" data-type="content">
+          <div class="slide-inner-container">
+            <div class="slide-inner-slides">
+              <div class="slide-inner">
+                <div class="content-inner">
+                  <h2>O que é Frontend?</h2>
+                  <ul>
+                    <li><span class="dot"></span> Parte visual das aplicações — o que o usuário vê e usa.</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="slide-inner">
+                <div class="content-inner">
+                  <h2>O que é Frontend?</h2>
+                  <ul>
+                    <li><span class="dot"></span> Interface e interação: botões, menus, formulários, animações.</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="slide-inner">
+                <div class="content-inner">
+                  <h2>O que é Frontend?</h2>
+                  <ul>
+                    <li><span class="dot"></span> É a junção de design, lógica e experiência do usuário.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="slide-indicators"></div>
+          </div>
+        </section>
+
+        <!-- Slide 4 - Exemplos -->
+        <section class="slide content" data-type="content">
+          <div class="slide-inner-container">
+            <div class="slide-inner-slides">
+              <div class="slide-inner">
+                <div class="content-inner">
+                  <h2>Exemplos do dia a dia</h2>
+                  <ul>
+                    <li><span class="dot"></span> Instagram Web</li>
+                    <li><span class="dot"></span> Spotify Web</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="slide-inner">
+                <div class="content-inner">
+                  <h2>Exemplos do dia a dia</h2>
+                  <ul>
+                    <li><span class="dot"></span> Lojas online (e-commerce)</li>
+                    <li><span class="dot"></span> Portais escolares e ferramentas educacionais</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="slide-indicators"></div>
+          </div>
+        </section>
+
+        <!-- Slide 5 - O que um desenvolvedor faz -->
+        <section class="slide content" data-type="content">
+          <div class="slide-inner-container">
+            <div class="slide-inner-slides">
+              <div class="slide-inner">
+                <div class="content-inner">
+                  <h2>O que um desenvolvedor frontend faz</h2>
+                  <ul>
+                    <li><span class="dot"></span> Constrói telas e layouts</li>
+                    <li><span class="dot"></span> Implementa interações e animações</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="slide-inner">
+                <div class="content-inner">
+                  <h2>O que um desenvolvedor frontend faz</h2>
+                  <ul>
+                    <li><span class="dot"></span> Consome APIs para mostrar dados</li>
+                    <li><span class="dot"></span> Trabalha em equipe com designers e backend</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="slide-indicators"></div>
+          </div>
+        </section>
+
+        <!-- Slide 6 - A base da Web -->
+        <section class="slide content" data-type="content">
+          <div class="slide-inner-container">
+            <div class="slide-inner-slides">
+              <div class="slide-inner">
+                <div class="content-inner">
+                  <h2>A base da Web</h2>
+                  <ul>
+                    <li><span class="dot"></span> HTML — estrutura semântica</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="slide-inner">
+                <div class="content-inner">
+                  <h2>A base da Web</h2>
+                  <ul>
+                    <li><span class="dot"></span> CSS — estilo e responsividade</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="slide-inner">
+                <div class="content-inner">
+                  <h2>A base da Web</h2>
+                  <ul>
+                    <li><span class="dot"></span> JavaScript — comportamento e lógica</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="slide-indicators"></div>
+          </div>
+        </section>
+
+        <!-- Slide 7 - Ferramentas -->
+        <section class="slide content" data-type="content">
+          <div class="slide-inner-container">
+            <div class="slide-inner-slides">
+              <div class="slide-inner">
+                <div class="content-inner">
+                  <h2>Ferramentas utilizadas</h2>
+                  <ul>
+                    <li><span class="dot"></span> VS Code — editor</li>
+                    <li><span class="dot"></span> Git & GitHub — controle de versão</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="slide-inner">
+                <div class="content-inner">
+                  <h2>Ferramentas utilizadas</h2>
+                  <ul>
+                    <li><span class="dot"></span> Figma — design e prototipação</li>
+                    <li><span class="dot"></span> Chrome DevTools — depuração</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="slide-indicators"></div>
+          </div>
+        </section>
+
+        <!-- Slide 8 - UX -->
+        <section class="slide content" data-type="content">
+          <div class="slide-inner-container">
+            <div class="slide-inner-slides">
+              <div class="slide-inner">
+                <div class="content-inner">
+                  <h2>UX no Frontend</h2>
+                  <ul>
+                    <li><span class="dot"></span> Facilidade de uso e clareza</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="slide-inner">
+                <div class="content-inner">
+                  <h2>UX no Frontend</h2>
+                  <ul>
+                    <li><span class="dot"></span> Organização da informação</li>
+                    <li><span class="dot"></span> Acessibilidade (A11y) — construir para todos</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="slide-indicators"></div>
+          </div>
+        </section>
+
+        <!-- Slide 9 - Mercado -->
+        <section class="slide content" data-type="content">
+          <div class="slide-inner-container">
+            <div class="slide-inner-slides">
+              <div class="slide-inner">
+                <div class="content-inner">
+                  <h2>Mercado de Trabalho</h2>
+                  <ul>
+                    <li><span class="dot"></span> Alta demanda por profissionais</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="slide-inner">
+                <div class="content-inner">
+                  <h2>Mercado de Trabalho</h2>
+                  <ul>
+                    <li><span class="dot"></span> Frameworks populares: React, Vue, Svelte</li>
+                    <li><span class="dot"></span> Boas práticas, portfólio e projetos valem muito</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="slide-indicators"></div>
+          </div>
+        </section>
+
+        <!-- Slide 10 - Como começar -->
+        <section class="slide content" data-type="content">
+          <div class="slide-inner-container">
+            <div class="slide-inner-slides">
+              <div class="slide-inner">
+                <div class="content-inner">
+                  <h2>Como começar</h2>
+                  <ul>
+                    <li><span class="dot"></span> Aprender HTML, CSS e JavaScript</li>
+                    <li><span class="dot"></span> Construir projetos simples: página pessoal, to-do, calculadora</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="slide-inner">
+                <div class="content-inner">
+                  <h2>Como começar</h2>
+                  <ul>
+                    <li><span class="dot"></span> Publicar código no GitHub</li>
+                    <li><span class="dot"></span> Criar um portfólio apresentável</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="slide-indicators"></div>
+          </div>
+        </section>
+
+        <!-- Slide 11 - Demo -->
+        <section class="slide code" data-type="code">
+          <div class="slide-inner-container">
+            <div class="slide-inner-slides">
+              <div class="slide-inner">
+                <div class="content-inner">
+                  <h2>Demonstração rápida</h2>
+                  <p style="color:var(--muted); margin-top:8px;">Criar um botão que muda de cor ao clicar</p>
+                  <pre style="margin-top:18px;">&lt;button id="btn"&gt;Clique&lt;/button&gt;
+&lt;script&gt;
+  const btn = document.getElementById('btn');
+  btn.addEventListener('click', () => btn.classList.toggle('active'))
+&lt;/script&gt;</pre>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Slide 12 - Closing -->
+        <section class="slide cover" data-type="cover">
+          <div class="slide-inner-container">
+            <div class="slide-inner-slides">
+              <div class="slide-inner">
+                <div>
+                  <h1>Você pode criar coisas que o mundo inteiro usa.</h1>
+                  <p>Comece hoje.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </div>
+
+    <div class="footer" id="footer">1 / 12</div>
+
+    <script>
+      (function(){
+        const slidesEl = document.getElementById('slides');
+        const slides = Array.from(slidesEl.children);
+        const total = slides.length;
+        let index = 0;
+        const footer = document.getElementById('footer');
+        const slideStates = [];
+
+        function initSlideSliders() {
+          slides.forEach((slide, slideIndex) => {
+            const container = slide.querySelector('.slide-inner-container');
+            if (!container) return;
+            
+            const innerSlidesEl = container.querySelector('.slide-inner-slides');
+            const innerSlides = Array.from(innerSlidesEl.children);
+            const indicatorsEl = container.querySelector('.slide-indicators');
+            
+            if (innerSlides.length <= 1) {
+              if (indicatorsEl) indicatorsEl.style.display = 'none';
+              slideStates[slideIndex] = { current: 0, total: 1 };
+              return;
+            }
+
+            slideStates[slideIndex] = { current: 0, total: innerSlides.length };
+            
+            innerSlides.forEach((_, i) => {
+              const indicator = document.createElement('div');
+              indicator.className = 'slide-indicator' + (i === 0 ? ' active' : '');
+              indicator.setAttribute('data-slide-index', slideIndex);
+              indicator.setAttribute('data-inner-index', i);
+              indicator.addEventListener('click', () => {
+                goToInnerSlide(slideIndex, i);
+              });
+              indicatorsEl.appendChild(indicator);
+            });
+
+            function updateInnerSlide() {
+              const state = slideStates[slideIndex];
+              const pct = -state.current * (100 / state.total);
+              innerSlidesEl.style.transform = 'translateX(' + pct + '%)';
+              
+              const indicators = Array.from(indicatorsEl.children);
+              indicators.forEach((ind, i) => {
+                ind.classList.toggle('active', i === state.current);
+              });
+              
+              innerSlides.forEach((s, i) => {
+                s.setAttribute('aria-hidden', i !== state.current);
+              });
+            }
+
+            updateInnerSlide();
+          });
+        }
+
+        function goToInnerSlide(slideIndex, innerIndex) {
+          if (!slideStates[slideIndex]) return;
+          const state = slideStates[slideIndex];
+          state.current = Math.max(0, Math.min(innerIndex, state.total - 1));
+          
+          const slide = slides[slideIndex];
+          const container = slide.querySelector('.slide-inner-container');
+          const innerSlidesEl = container.querySelector('.slide-inner-slides');
+          const indicatorsEl = container.querySelector('.slide-indicators');
+          
+          if (!innerSlidesEl || !indicatorsEl) return;
+          
+          const pct = -state.current * (100 / state.total);
+          innerSlidesEl.style.transform = 'translateX(' + pct + '%)';
+          
+          const indicators = Array.from(indicatorsEl.children);
+          indicators.forEach((ind, i) => {
+            ind.classList.toggle('active', i === state.current);
+          });
+          
+          const innerSlides = Array.from(innerSlidesEl.children);
+          innerSlides.forEach((s, i) => {
+            s.setAttribute('aria-hidden', i !== state.current);
+          });
+        }
+
+        function getTotalSlides() {
+          return slideStates.reduce((sum, state) => sum + state.total, 0);
+        }
+
+        function getCurrentSlideNumber() {
+          let count = 0;
+          for (let i = 0; i < index; i++) {
+            count += slideStates[i]?.total || 1;
+          }
+          count += (slideStates[index]?.current || 0) + 1;
+          return count;
+        }
+
+        function update() {
+          const pct = -index * (100 / total);
+          slidesEl.style.transform = 'translateX(' + pct + '%)';
+          
+          const currentSlide = getCurrentSlideNumber();
+          const totalSlides = getTotalSlides();
+          footer.textContent = currentSlide + ' / ' + totalSlides;
+          
+          slides.forEach((s, i) => {
+            s.setAttribute('aria-hidden', i !== index);
+          });
+        }
+
+        function nextInner() {
+          const state = slideStates[index];
+          if (state && state.current < state.total - 1) {
+            state.current++;
+            goToInnerSlide(index, state.current);
+            update();
+            return true;
+          }
+          return false;
+        }
+
+        function prevInner() {
+          const state = slideStates[index];
+          if (state && state.current > 0) {
+            state.current--;
+            goToInnerSlide(index, state.current);
+            update();
+            return true;
+          }
+          return false;
+        }
+
+        function next(){
+          if (nextInner()) return;
+          index = Math.min(index + 1, total - 1);
+          const state = slideStates[index];
+          if (state && state.current > 0) {
+            state.current = 0;
+            goToInnerSlide(index, 0);
+          }
+          update();
+        }
+        
+        function prev(){
+          if (prevInner()) return;
+          index = Math.max(index - 1, 0);
+          const state = slideStates[index];
+          if (state) {
+            state.current = state.total - 1;
+            goToInnerSlide(index, state.current);
+          }
+          update();
+        }
+
+        document.getElementById('next').addEventListener('click', next);
+        document.getElementById('prev').addEventListener('click', prev);
+
+        window.addEventListener('keydown', function(e){
+          const key = e.key;
+          if(['ArrowRight','PageDown',' ','Enter'].includes(key)){
+            e.preventDefault();
+            next();
+          } else if(['ArrowLeft','PageUp','Backspace'].includes(key)){
+            e.preventDefault();
+            prev();
+          } else if(key === 'Home'){ 
+            index = 0;
+            slideStates.forEach((state, i) => {
+              if (state) state.current = 0;
+              goToInnerSlide(i, 0);
+            });
+            update(); 
+          } else if(key === 'End'){ 
+            index = total - 1;
+            const state = slideStates[index];
+            if (state) {
+              state.current = state.total - 1;
+              goToInnerSlide(index, state.current);
+            }
+            update(); 
+          }
+        });
+
+        initSlideSliders();
+        update();
+      })();
+    </script>
+  </div>
+</body>
+</html>
